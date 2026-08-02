@@ -1,0 +1,1 @@
+NOTE: icon-192.png / icon-512.png referenced above are not included — add your own app icon files to public/ to complete PWA support.
