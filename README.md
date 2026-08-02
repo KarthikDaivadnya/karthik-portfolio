@@ -1,136 +1,159 @@
-# Karthik — Portfolio (Next.js 15 / React 19 / TypeScript)
+<div align="center">
 
-A premium, dark-futuristic personal portfolio: glassmorphism, aurora gradients, a
-Three.js hero scene, Framer Motion micro-interactions, Lenis smooth scroll, a live
-GitHub stats panel, and a working contact form — built around real content, not
-placeholder text.
+# ✦ Karthik — Portfolio
 
-## Stack
-Next.js (App Router) · React · TypeScript · Tailwind CSS · Framer Motion ·
-Three.js / React Three Fiber · Lucide Icons · Lenis · EmailJS
+**AI/ML Engineer & Software Developer**
 
-## Getting started
+A dark-futuristic personal portfolio — glassmorphism, aurora gradients, a live
+Three.js hero scene, and real project data instead of placeholder text.
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-black?logo=framer&logoColor=white)](https://www.framer.com/motion)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)](https://vercel.com)
+
+</div>
+
+---
+
+## ✨ What's inside
+
+| | |
+|---|---|
+| 🎬 **Hero** | Typing role animation, interactive Three.js particle scene, magnetic CTA buttons |
+| 🧭 **Navigation** | Floating dock nav, scroll progress bar, dark/light theme toggle |
+| 🪪 **About** | Real bio, education, animated timeline |
+| 🧩 **Skills** | Bento-grid categories (no fabricated proficiency %) |
+| 🚀 **Projects** | AeroSense, DocMind, SalesPulse, Multi-Agent AI System, Legal Contract Pipeline — all real, with GitHub links |
+| 📊 **GitHub Activity** | **Live** — fetched from `api.github.com` at render time, plus a real contribution heatmap |
+| 🏆 **Achievements** | Only real, countable metrics — no invented hackathon/certification counts |
+| 🛠️ **Services** | AI Solutions, ML, Data Analysis, Full-Stack Dev, Automation |
+| ✉️ **Contact** | Validated form, sends real email via **EmailJS** |
+| 🗺️ **Map, Footer, Socials** | OpenStreetMap embed, animated social icons, back-to-top |
+
+Every glass card has a cursor-tracked spotlight glow and an animated gradient
+border on hover; project cards tilt in 3D on mousemove; the whole page respects
+`prefers-reduced-motion`.
+
+## 🧱 Stack
+
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · Framer Motion ·
+Three.js / React Three Fiber · Lenis smooth scroll · Lucide Icons · EmailJS
+
+## 🚀 Getting started
+
 ```bash
 npm install
-cp .env.example .env.local   # fill in values, see below
+cp .env.example .env.local   # fill in your values — see below
 npm run dev
 ```
-Open http://localhost:3000.
 
-## Environment variables
-See `.env.example`.
+Open **http://localhost:3000**.
 
-| Variable | Required? | What it's for |
-|---|---|---|
-| `NEXT_PUBLIC_GITHUB_USERNAME` | No — defaults to `KarthikDaivadnya` | Powers the live GitHub stats section (public API, no auth needed) |
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | **Yes**, for the contact form to send email | From EmailJS → Email Services |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | **Yes** | From EmailJS → Email Templates → your template's ID |
-| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | **Yes** | From EmailJS → Account → General → "Public Key" (not the private key) |
-| `RESEND_API_KEY` | No — unused by default | Only needed if you switch the contact form back to server-side sending via `app/api/contact/route.ts` (see note below) |
+## 🔐 Environment variables
 
-All three EmailJS vars must be set and the dev server restarted after editing
-`.env.local` — Next.js only reads env files at server boot, not on hot-reload.
+```bash
+# lib/data.ts's profile.github already defaults to this — only needed if you fork it
+NEXT_PUBLIC_GITHUB_USERNAME=KarthikDaivadnya
 
-## Project structure
+# Required for the contact form to actually send email — see EmailJS setup below
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+```
+
+**EmailJS template setup** — the contact form sends these variables, so your
+EmailJS template's Content tab needs matching `{{...}}` placeholders:
+
+| Sent from the form | Use in your template as |
+|---|---|
+| Sender's name | `{{from_name}}` or `{{name}}` |
+| Sender's email | `{{from_email}}` or `{{email}}` |
+| Subject line | `{{subject}}` or `{{title}}` |
+| Message body | `{{message}}` |
+| Where it should land | `{{to_email}}` — set your template's **To Email** field to exactly this |
+
+> If you enable EmailJS's Auto-Reply feature on your template, it needs to be
+> **linked to its own template** (Auto-Reply tab → Linked Template) — it's a
+> separate feature from the main Content tab, not just another field.
+
+## 📁 Project structure
+
 ```
 app/
-  layout.tsx          Root layout, fonts, SEO metadata, JSON-LD
-  page.tsx             Assembles every section in order
-  globals.css          Design tokens (CSS vars), glass-card + spotlight utilities
-  sitemap.ts            Auto-generated sitemap.xml
-  robots.ts             Auto-generated robots.txt
-  api/contact/route.ts  Resend-based email sending — present but UNUSED by
-                         default; Contact.tsx sends via EmailJS client-side
-                         instead (see "Contact form" below)
+  layout.tsx              Root layout, fonts, SEO metadata, JSON-LD
+  page.tsx                 Assembles every section in order
+  globals.css              Design tokens, glass-card + spotlight utilities
+  sitemap.ts / robots.ts   Auto-generated
+  api/contact/route.ts     Optional server-side alternative (Resend-based,
+                            currently unused — the form sends via EmailJS
+                            client-side instead; see note below)
 components/
-  layout/               Header, DockNav, Footer, Loader, CustomCursor, ScrollProgress, ThemeToggle
-  sections/              One component per page section (Hero, About, Skills, Projects, ...)
-  ui/                    Reusable primitives — GlowCard, TiltCard, MagneticButton, Toast
-hooks/
-  useTypewriter.ts        Hero role-cycling animation
-  useSmoothScroll.ts       Lenis init (respects prefers-reduced-motion)
-  useRevealOnScroll.ts     IntersectionObserver scroll-reveal
-lib/
-  data.ts                 All real content — profile, projects, skills, timeline, achievements
-  types.ts                 Shared TypeScript interfaces
-public/
-  manifest.json            PWA manifest (icons not included — see ICONS_TODO.txt)
-.gitignore                 Excludes node_modules, .next, .env*, and OS/editor files
+  layout/    Header, DockNav, Footer, Loader, CustomCursor, ScrollProgress, ThemeToggle
+  sections/   One component per page section (Hero, About, Skills, Projects, ...)
+  ui/         Reusable primitives — GlowCard, TiltCard, MagneticButton, Toast
+hooks/        useTypewriter, useSmoothScroll (Lenis), useRevealOnScroll
+lib/          data.ts (all real content), types.ts
+public/       manifest.json, ICONS_TODO.txt
 ```
 
-## Contact form — how it's wired
-The form (`components/sections/Contact.tsx`) validates client-side, then sends
-directly via **EmailJS** using `@emailjs/browser` — no server round-trip, no
-`/api/contact` call. It sends both naming conventions for template variables
-(`from_name`/`name`, `subject`/`title`, `from_email`/`email`, `message`,
-`to_email`) so it works regardless of which set your EmailJS template uses.
+## 🧭 What's real vs. what's a stub
 
-**Template field reference** (Content tab of your EmailJS template):
-
-| Field | Value |
-|---|---|
-| To Email | `{{to_email}}` |
-| Reply To | `{{from_email}}` |
-| Subject | `New portfolio contact: {{subject}}` (or similar) |
-| Body | Reference `{{from_name}}`, `{{from_email}}`, and `{{message}}` |
-
-If you're also using EmailJS's Auto-Reply feature (a confirmation sent back to
-the visitor), it needs its own "To" field — use `{{email}}`, which the code
-also sends.
-
-**Important for Vercel:** if your EmailJS account has "Allowed Origins"
-restrictions under Account → Security, add your production URL there once
-deployed — a domain that works locally on `localhost` will silently fail on
-your live Vercel URL until it's added to that list.
-
-**Switching to server-side sending instead:** `app/api/contact/route.ts`
-already has a working Resend integration if you'd rather send from the server
-than the browser — just set `RESEND_API_KEY` and change `Contact.tsx`'s
-`handleSubmit` to `fetch("/api/contact", ...)` instead of calling
-`emailjs.send(...)` directly.
-
-## What's real vs. what's a stub
-This project follows one rule throughout: **no fabricated data on a page recruiters
-will read.**
+This project follows one rule throughout: **no fabricated data on a page
+recruiters will read.**
 
 | Section | Status |
 |---|---|
 | Hero, About, Skills, Projects, Services, Contact | Fully real content, fully functional |
-| Contact form | **Working** — sends real email via EmailJS, validated end-to-end |
-| GitHub Activity | **Live** — fetches `api.github.com` client-side at render time, plus a real contribution heatmap image |
-| Achievements | Only 2 real, countable metrics shown (projects shipped, flagship systems). Hackathons / certifications / coding-problems-solved counters from the original brief were **left out**, not faked |
+| GitHub Activity | **Live** — fetches `api.github.com` client-side, plus a real contribution heatmap image |
+| Achievements | Only real, countable metrics shown. Hackathons / certifications / coding-problems-solved counters were **left out**, not faked |
 | Certifications / Testimonials / Blog | Built and styled, shown as honest empty states — no invented certs, quotes, or posts |
+| Contact form | **Sends real email via EmailJS**, client-side, validated before submit |
+| `api/contact/route.ts` | A second, server-side sending path (Resend) — currently **not used** by the form. Safe to delete, or keep as a fallback if you ever want server-side sending instead |
 | AI Chat Assistant | UI shell only, clearly marked as not wired to a real model — see `components/sections/AIChatWidget.tsx` |
-| Voice command navigation, multi-language, visitor counter, analytics dashboard, LeetCode API integration | **Not built.** Each needs a real backend, third-party API, or credentials this project doesn't have; shipping a fake version would mislead anyone viewing the site |
+| Voice nav, multi-language, visitor counter, analytics dashboard, LeetCode API | **Not built** — each needs a real backend or third-party credentials this project doesn't have |
 
-## What still needs you before this goes live
-1. **Resume** — add a real PDF and link it from the two "Download Resume" buttons (`Hero.tsx`, `DockNav.tsx`).
-2. **Contact info** — `profile.email`, `profile.linkedin`, and `profile.twitter` in `lib/data.ts` are the single source of truth used across Hero, Footer, and Contact — confirm they're your real values.
-3. **App icons** — add `public/icon-192.png` and `public/icon-512.png` for full PWA installability (see `public/ICONS_TODO.txt`).
-4. **Domain** — replace the placeholder URL in `app/layout.tsx`, `app/sitemap.ts`, and `app/robots.ts` with your real deployed domain, once you have one.
-5. **EmailJS Allowed Origins** — add your production Vercel URL once deployed (see Contact form section above).
+## ✅ Before this goes fully live
 
-## Deployment (Vercel)
-**CLI:**
+- [ ] Add a real resume PDF at `public/resume.pdf` and link it from the two "Download Resume" buttons
+- [ ] Fill in `email`, `linkedin`, `twitter` in the `profile` object in `lib/data.ts` (single source of truth — used by Hero, Footer, and Contact)
+- [ ] Add `public/icon-192.png` + `icon-512.png` for full PWA installability
+- [ ] Replace the placeholder domain in `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts` with your real Vercel URL or custom domain
+
+## ☁️ Deploying to Vercel
+
+**Fastest — CLI:**
 ```bash
 npm install -g vercel
 vercel        # preview deploy
 vercel --prod # production deploy
 ```
 
-**Or via GitHub integration** (recommended for ongoing updates):
-1. Push this repo to GitHub (`.gitignore` already excludes `.env.local`, so your keys won't leak).
-2. Import the repo at [vercel.com/new](https://vercel.com/new) — Next.js is auto-detected, no config needed.
-3. Add `NEXT_PUBLIC_EMAILJS_SERVICE_ID`, `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`, and `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` under Project Settings → Environment Variables.
-4. Deploy. Every future `git push` to `main` auto-deploys.
-5. Once live, add the deployed URL to EmailJS's Allowed Origins (see above) — this step is easy to forget and causes the form to work locally but fail in production.
+**Recommended — GitHub integration (auto-deploys on every push):**
+1. Push this repo to GitHub
+2. Import it at [vercel.com/new](https://vercel.com/new) — Next.js is auto-detected, no config needed
+3. Add the three `NEXT_PUBLIC_EMAILJS_*` variables under **Project Settings → Environment Variables**
+4. Deploy
 
-## Performance & accessibility notes
-- The Three.js hero scene loads via `next/dynamic` with `ssr: false` so it never
-  blocks first paint.
-- All interactive elements are keyboard-reachable; `:focus-visible` styling is set
-  globally in `globals.css`.
-- Respects `prefers-reduced-motion` in the smooth-scroll hook and CSS.
-- Lighthouse scores depend on final image assets, font-loading strategy, and hosting —
-  run `npm run build && npx next start` and audit locally before claiming a specific
-  number; none is asserted here since it hasn't been measured on this exact build.
+> ⚠️ Env vars added in the Vercel dashboard only apply to deployments made
+> *after* they're added — trigger a fresh deploy (push a commit, or
+> **Deployments → Redeploy**) after adding or changing one.
+
+**Custom domain:** Project Settings → Domains → add it → follow the DNS
+instructions Vercel provides, then update `layout.tsx` / `sitemap.ts` /
+`robots.ts` to match and redeploy.
+
+## ⚡ Performance & accessibility
+
+- The Three.js hero scene loads via `next/dynamic({ ssr: false })` so it never blocks first paint
+- All interactive elements are keyboard-reachable; `:focus-visible` is styled globally
+- Respects `prefers-reduced-motion` throughout (smooth scroll, all animations)
+- Run `npm run build && npm start` and audit locally with Lighthouse before quoting a specific score — none is asserted here since it hasn't been measured on your final deployed assets
+
+---
+
+<div align="center">
+<sub>Built from scratch by Karthik · Deployed on Vercel</sub>
+</div>
