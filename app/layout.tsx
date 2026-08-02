@@ -8,7 +8,7 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400","500","600","700"],
 const inter = Inter({ subsets: ["latin"], weight: ["400","500","600"], variable: "--font-inter" });
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400","500"], variable: "--font-mono" });
 
-const siteUrl = "https://karthik-portfolio.vercel.app"; // TODO: replace with your real domain
+const siteUrl = "https://karthik-portfolio-opal-two.vercel.app"; // TODO: replace with your real domain
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
