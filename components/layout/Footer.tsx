@@ -2,7 +2,7 @@ import { Github, Linkedin, Twitter, Mail, ArrowUp } from "lucide-react";
 
 const socials = [
   { href: "https://github.com/KarthikDaivadnya", label: "GitHub", Icon: Github },
-  { href: "https://www.linkedin.com/in/karthikdaivadnya", label: "LinkedIn", Icon: Linkedin }, // TODO: add real LinkedIn URL
+  { href: "https://www.linkedin.com/in/karthik-daivadnya", label: "LinkedIn", Icon: Linkedin }, // TODO: add real LinkedIn URL
   { href: "#", label: "X / Twitter", Icon: Twitter }, // TODO: add real X URL
   { href: "karthikdaivanya27@gmail.com", label: "Email", Icon: Mail }, // TODO: real email
 ];
